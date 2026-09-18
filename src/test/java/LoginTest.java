@@ -64,5 +64,41 @@ public class LoginTest {
         assertEquals(expected, actual);
         assertTrue(instance.checkPasswordComplexity(passwordTest));
     }
+ @Test
+
+    public void testCheckPaswordComplexityIncorrect() {
+        String firstName = "";
+        String lastName = "";
+        String username = "";
+        String passwordTest = "password";
+        String cellNumber = "";
+
+        Login instance = new Login(username, cellNumber, passwordTest, firstName, lastName);
+
+        boolean expected = false;
+        boolean actual = instance.checkPasswordComplexity(passwordTest);
+
+        assertEquals(expected, actual);
+        assertFalse(instance.checkPasswordComplexity(passwordTest));
+    }
+
+   
+    @Test
+   
+    public void testCheckCellPhoneNumberCorrect() {  // ensures that cellphone number has the correct format
+        String firstName = "";
+        String lastName = "";
+        String username = "";
+        String password = "";
+        String cellNumberTest = "+27728614789";
+
+        Login instance = new Login(username, cellNumberTest, password, firstName, lastName);
+
+        boolean expected = true;
+        boolean actual = instance.checkCellPhoneNumber(cellNumberTest);
+
+        assertEquals(expected, actual);
+        assertTrue(instance.checkCellPhoneNumber(cellNumberTest));
+    }
 
 }
