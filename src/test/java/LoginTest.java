@@ -100,5 +100,52 @@ public class LoginTest {
         assertEquals(expected, actual);
         assertTrue(instance.checkCellPhoneNumber(cellNumberTest));
     }
+ @Test
+   
+    public void testCheckCellPhoneNumberIncorrect() { // rejects incorrect phon number
+        String firstName = "";
+        String lastName = "";
+        String username = "";
+        String password = "";
+        String cellNumberTest = "02966773";
 
+        Login instance = new Login(username, cellNumberTest, password, firstName, lastName);
+
+        boolean expected = false;
+        boolean actual = instance.checkCellPhoneNumber(cellNumberTest);
+
+        assertEquals(expected, actual);
+        assertFalse(instance.checkCellPhoneNumber(cellNumberTest));
+    }
+
+    @Test
+    
+    public void testLoginSuccessful() {
+        String firstName = "";
+        String lastName = "";
+        String username = "kyl_e";
+        String password = "Ferrer0rocher!";
+        String cellNumber = "";
+        String enteredUsername = "kyl_e";
+        String enteredPassword = "Ferrer0rocher!";
+
+        Login instance = new Login(username, cellNumber, password, firstName, lastName);
+
+         assertTrue(instance.loginUser(username, password, enteredUsername, enteredPassword));
+    }
+
+    @Test
+    public void testLoginFailed() {
+        String firstName = "";
+        String lastName = "";
+        String username = "kyle!!!!!";
+        String password = "T0blerone?";
+        String cellNumber = "";
+        String enteredUsername = "bobby";
+        String enteredPassword = "Cadbury_2";
+
+        Login instance = new Login(username, cellNumber, password, firstName, lastName);
+
+        assertFalse(instance.loginUser(username, password, enteredUsername, enteredPassword));
+    }
 }
