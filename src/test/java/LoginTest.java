@@ -32,4 +32,20 @@ public class LoginTest {
         assertEquals(expected, actual);
         assertTrue(instance.checkUserName(userTest));
     }
+     @Test
+    public void testCheckUserNameIncorrect() {
+        String firstName = "";
+        String lastName = "";
+        String userTest = "kyle!!!!!!";
+        String password = "";
+        String cellNumber = "";
+
+        Login instance = new Login(userTest, cellNumber, password, firstName, lastName);
+
+        boolean expected = false;
+        boolean actual = instance.checkUserName(userTest);
+
+        assertEquals(expected, actual);
+        assertFalse(instance.checkUserName(userTest));
+    }
 }
