@@ -48,4 +48,21 @@ public class LoginTest {
         assertEquals(expected, actual);
         assertFalse(instance.checkUserName(userTest));
     }
+    @Test
+   
+    public void testCheckPaswordComplexityCorrect() { //checks password
+        String firstName = "";
+        String lastName = "";
+        String username = "";
+        String passwordTest = "Ch&&sec@ke99!";
+        String cellNumber = "";
+
+        Login instance = new Login(username, cellNumber, passwordTest, firstName, lastName);
+        boolean expected = true;
+        boolean actual = instance.checkPasswordComplexity(passwordTest);
+
+        assertEquals(expected, actual);
+        assertTrue(instance.checkPasswordComplexity(passwordTest));
+    }
+
 }
