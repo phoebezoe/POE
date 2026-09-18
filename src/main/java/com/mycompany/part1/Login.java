@@ -25,9 +25,9 @@ public class Login {
         this.lastName = lastName;
     }
 
-    public boolean checkUserName(String username) {
+    public boolean checkUserName(String username) { //username needs to contain a _ be less than 5 characters
         boolean Username;
-        if (username.contains("_") && username.length() <= 5){
+        if (username.contains("_") && username.length() <= 5){// using if else to output a message depending on if the user followed the rules
         Username = true;
         System.out.println("Username successfully captured.");
     }else{
@@ -36,7 +36,7 @@ public class Login {
             }
         return Username;
     }
-     public boolean checkPasswordComplexity(String password) {
+     public boolean checkPasswordComplexity(String password) { // ensuring password follows the ruls
         boolean Password;
       if( password.matches ("^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$")){
       Password = true;
@@ -48,9 +48,9 @@ public class Login {
       return Password;
     }
 
-    public boolean checkCellPhoneNumber(String cellphoneNumber) {
+    public boolean checkCellPhoneNumber(String cellphoneNumber) {// for south african format phne number
         boolean cellphone;
-        String regexPattern = "^(\\+27)[6-8][0-9]{8}$";
+        String regexPattern = "^(\\+27)[6-8][0-9]{8}$";//regex for south african phone numbers
         
         if (cellphoneNumber.matches(regexPattern)){
             cellphone = true;
@@ -73,7 +73,7 @@ public class Login {
         return "Username and password successfully captured.";
     }
      public boolean loginUser(String username, String password, String enteredUsername, String enteredPassword) {
-        boolean logininformation;
+        boolean logininformation; 
         
         if(enteredUsername.equals(username) && enteredPassword.equals(password)){
          logininformation = true;
@@ -95,3 +95,6 @@ public class Login {
     }
 }
 }
+//Logano keys, 2023. Java program to validate South African phone numbers using RegeX. [video online] Available at: https://www.youtube.com/watch?v=2M1CpEJZ6rk [Accessed 18 September 2026].
+//W3Schools, 2026. JavaScript if, else, and else if. [online] Available at: https://www.w3schools.com/js/js_if_else.asp [Accessed 18 September 2026].
+//freddiednml, 2017. south african mobile number regex [Source code]. Available at: https://github.com/ansman/validate.js/issues/235 [Accessed 18 September 2026].
