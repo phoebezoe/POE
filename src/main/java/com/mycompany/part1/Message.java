@@ -32,4 +32,12 @@ public class Message {
         this.messageText = messageText;
         this.messageHash = createMessageHash();
     }
+    
+    public Message(String messageID, int messageNumber, String recipient, String messageText) {
+        this.messageID = messageID;
+        this.messageNumber = messageNumber;
+        this.recipient = recipient;
+        this.messageText = messageText;
+        this.messageHash = createMessageHash();
+    }
 }
