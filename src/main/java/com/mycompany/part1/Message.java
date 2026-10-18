@@ -64,4 +64,47 @@ public class Message {
     public static boolean isValidRecipient(String cell) {
         return cell.matches("^\\+[0-9]{1,3}[0-9]{1,10}$");
     }
+    
+      public String checkRecipientCell() {
+        if (isValidRecipient(recipient)) {
+            return "Cell phone number successfully captured.";
+        }
+        return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
+    }
+ 
+    // A message may not be more than 250 characters
+    public static boolean isValidLength(String text) {
+        return text.length() <= 250;
+    }
+ 
+    // Returns the success or failure message for the message length
+    public String checkMessageLength() {
+        if (isValidLength(messageText)) {
+            return "Message ready to send.";
+        }
+        int extra = messageText.length() - 250;
+        return "Message exceeds 250 characters by " + extra + ", please reduce the size.";
+    }
+ 
+    // Hash = first two digits of the ID : message number : FIRSTWORD + LASTWORD in capitals
+    // e.g. 00:0:HITONIGHT. Uses indexOf and substring (string manipulation), no arrays.
+    public String createMessageHash() {
+        String text = messageText.trim();
+        int firstSpace = text.indexOf(" ");
+        int lastSpace = text.lastIndexOf(" ");
+ 
+        String firstWord = text;
+        String lastWord = text;
+        if (firstSpace != -1) {
+            firstWord = text.substring(0, firstSpace);
+            lastWord = text.substring(lastSpace + 1);
+        }
+ 
+        // remove punctuation such as the ? in "tonight?"
+        firstWord = firstWord.replaceAll("[^A-Za-z0-9]", "");
+        lastWord = lastWord.replaceAll("[^A-Za-z0-9]", "");
+ 
+        String firstTwo = messageID.substring(0, 2);
+        return (firstTwo + ":" + messageNumber + ":" + firstWord + lastWord).toUpperCase();
+    }
 }
