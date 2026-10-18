@@ -107,4 +107,98 @@ public class Message {
         String firstTwo = messageID.substring(0, 2);
         return (firstTwo + ":" + messageNumber + ":" + firstWord + lastWord).toUpperCase();
     }
+    
+     public String SentMessage(int choice) {
+        if (choice == 1) {
+            sentMessages = sentMessages + this.toString() + "\n\n";
+            totalMessages++;
+            return "Message successfully sent.";
+        } else if (choice == 2) {
+            return "Press 0 to delete the message.";
+        } else if (choice == 3) {
+            storeMessage();
+            return "Message successfully stored.";
+        } else {
+            return "Invalid option.";
+        }
+    }
+ 
+    // Lets the user choose to send, disregard or store the message
+    public String SentMessage(Scanner input) {
+        int choice = 0;
+        while (choice < 1 || choice > 3) {
+            System.out.println("1) Send Message");
+            System.out.println("2) Disregard Message");
+            System.out.println("3) Store Message to send later");
+            choice = Assignment.readInt(input, "Choose an option: ");
+        }
+ 
+        String result = SentMessage(choice);
+        if (choice == 2) {
+            System.out.println(result);                 // Press 0 to delete the message.
+            String answer = input.nextLine().trim();
+            while (!answer.equals("0")) {
+                System.out.println("Press 0 to delete the message.");
+                answer = input.nextLine().trim();
+            }
+            return "Message deleted.";
+        }
+        return result;
+    }
+ 
+    // Returns the details of all messages sent while the program is running
+    public static String printMessages() {
+        return sentMessages;
+    }
+ 
+    // Returns the total number of messages sent (spelled with two s's as in the brief)
+    public static int returnTotalMessagess() {
+        return totalMessages;
+    }
+ 
+    // Own method: adds this message to the stored messages and saves them in messages.json
+    // JSON layout based on the JSON syntax rules at json.org (2026) and the Java
+    // FileWriter class in Farrell (2022).
+    public void storeMessage() {
+        String entry = "  {\n"
+                + "    \"messageID\": \"" + escapeJson(messageID) + "\",\n"
+                + "    \"messageHash\": \"" + escapeJson(messageHash) + "\",\n"
+                + "    \"recipient\": \"" + escapeJson(recipient) + "\",\n"
+                + "    \"message\": \"" + escapeJson(messageText) + "\"\n"
+                + "  }";
+ 
+        if (totalStored > 0) {
+            storedEntries = storedEntries + ",\n";
+        }
+        storedEntries = storedEntries + entry;
+        totalStored++;
+ 
+        try (FileWriter writer = new FileWriter("messages.json")) {
+            writer.write("[\n" + storedEntries + "\n]\n");
+        } catch (IOException e) {
+            System.out.println("Could not write messages.json: " + e.getMessage());
+        }
+    }
+ 
+    // Makes text safe to place inside a JSON string (backslashes and quotation marks)
+    public static String escapeJson(String text) {
+        return text.replace("\\", "\\\\").replace("\"", "\\\"");
+    }
+ 
+    // Clears everything so each unit test starts fresh
+    public static void reset() {
+        sentMessages = "";
+        storedEntries = "";
+        totalMessages = 0;
+        totalStored = 0;
+    }
+ 
+    // Order required by the brief: Message ID, Message Hash, Recipient, Message
+    @Override
+    public String toString() {
+        return "Message ID: " + messageID + "\n"
+                + "Message Hash: " + messageHash + "\n"
+                + "Recipient: " + recipient + "\n"
+                + "Message: " + messageText;
+    }
 }
