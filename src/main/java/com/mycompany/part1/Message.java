@@ -40,4 +40,28 @@ public class Message {
         this.messageText = messageText;
         this.messageHash = createMessageHash();
     }
+     public static String generateMessageID() {
+        String digits = "0123456789";
+        Random random = new Random();
+        String id = "";
+        for (int i = 0; i < 10; i++) {
+            int position = random.nextInt(10);
+            id = id + digits.substring(position, position + 1);
+        }
+        return id;
+    }
+ 
+    // Boolean: true if the Message ID is no more than ten characters
+    public boolean checkMessageID() {
+        return messageID.length() <= 10;
+    }
+ 
+    // Message to display when the ID has been created (used in the unit test)
+    public String getMessageIDStatus() {
+        return "Message ID generated: " + messageID;
+    }
+ 
+    public static boolean isValidRecipient(String cell) {
+        return cell.matches("^\\+[0-9]{1,3}[0-9]{1,10}$");
+    }
 }
