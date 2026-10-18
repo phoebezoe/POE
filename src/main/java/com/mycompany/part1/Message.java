@@ -130,7 +130,7 @@ public class Message {
             System.out.println("1) Send Message");
             System.out.println("2) Disregard Message");
             System.out.println("3) Store Message to send later");
-            choice = Assignment.readInt(input, "Choose an option: ");
+            choice =Part1.readInt(input, "Choose an option: ");
         }
  
         String result = SentMessage(choice);

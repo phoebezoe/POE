@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Part1 {
 
     public static void main(String[] args) {
-       Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
 
         System.out.print("Please enter your first name: ");
         String firstName = input.nextLine();
@@ -23,28 +23,58 @@ public class Part1 {
         System.out.print(" Please enter a password that has 8+ chararacters, capital, number and special characters: ");
         String password = input.nextLine();
         System.out.print("Please enter a phone  number (e.g. +27838968976):");
-        String cellphoneNumber = input.nextLine(); 
-        
-       
-         Login login = new Login(username, cellphoneNumber, password, firstName,lastName);
+        String cellphoneNumber = input.nextLine();
 
-        String registrationResult = login.registerUser(username, password);
+        Login login = new Login(username, cellphoneNumber, password, firstName, lastName);//needs fix
+
+        String registrationResult = login.registerUser(username, password);// none existing 
         System.out.println(registrationResult);
 
-        if (registrationResult.equals("Username and password successfully captured.")) {
+               if (registrationResult.equals("Username and password successfully captured.")) {
             System.out.print("Please re-enter your username: ");
             String enteredUsername = input.nextLine();
             System.out.print("Please re-enter your password: ");
             String enteredPassword = input.nextLine();
 
-          
-            System.out.println(login.returnLoginStatus(username, password, enteredUsername, enteredPassword, firstName, lastName));
-        }
+            boolean loggedIn = login.loginUser(username, password, enteredUsername, enteredPassword);
+
+            if (loggedIn) {
+               System.out.println("Welcome to QuickChat.");
+
+            int maxMessages = readInt(input, "How many messages do you want to enter? ");
+                int entered = 0;
+                int choice = 0;
+                while (choice != 3) {
+                    System.out.println("1) Send Messages");
+                    System.out.println("2) Show recently sent messages");
+                    System.out.println("3) Quit");
+                    System.out.print("Choose an option: ");
+                   choice = readInt(input, "");
+
+                    if (choice == 1) {
+                     if (entered >= maxMessages) {
+                    System.out.println("You have already entered all " + maxMessages + " messages.");
+                    } else {
+                        enterMessage(input, entered);
+                              entered++;
+                    }
+                    } else if (choice == 2) {
+                        System.out.println("Coming Soon.");
+                    } else if (choice == 3) {
+                        System.out.println("Goodbye.");
+                    } else {
+                        System.out.println("Invalid option. Please choose 1, 2 or 3.");
+                    }
+                }  
+                System.out.println("\n--- Messages sent ---");
+                System.out.println(Message.printMessages());
+                System.out.println("Total messages sent: " + Message.returnTotalMessagess());// closes while
+            }                     // closes if (loggedIn)
+        }                         // closes if (registrationResult...)
 
         input.close();
-    }
-    
-     public static void enterMessage(Scanner input, int messageNumber) {
+    }    
+        public static void enterMessage(Scanner input, int messageNumber) {
         // recipient: keep asking until the number is valid
         String recipient = "";
         boolean recipientOk = false;
@@ -58,8 +88,9 @@ public class Part1 {
                 System.out.println("Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.");
             }
         }
-        
-         String text = "";
+ 
+        // message text: keep asking until it is not empty and not longer than 250 characters
+        String text = "";
         boolean textOk = false;
         while (!textOk) {
             System.out.print("Enter your message: ");
@@ -74,9 +105,9 @@ public class Part1 {
                 System.out.println("Message exceeds 250 characters by " + (text.length() - 250) + ", please reduce the size.");
             }
         }
-}
-
- Message msg = new Message(messageNumber, recipient, text);
+ 
+        // the Message ID and Message Hash are created automatically in the constructor
+        Message msg = new Message(messageNumber, recipient, text);
         String outcome = msg.SentMessage(input);
         System.out.println(outcome);
  
@@ -97,3 +128,4 @@ public class Part1 {
             }
         }
     }
+        }
