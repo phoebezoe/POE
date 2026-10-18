@@ -52,5 +52,73 @@ public class MessageTest {
                 msg2.checkRecipientCell());
     }
  
-    
+     @Test
+    public void testMessageHashTestCase1() {
+        assertEquals("00:0:HITONIGHT", msg1.createMessageHash());
+    }
+ 
+    @Test
+    public void testMessageHashesInLoop() {
+        // test the hash of both messages in a loop (no arrays)
+        for (int i = 0; i < 2; i++) {
+            Message m = msg1;
+            String expected = "00:0:HITONIGHT";
+            if (i == 1) {
+                m = msg2;
+                expected = "00:1:HIPAYMENT";
+            }
+            assertEquals(expected, m.createMessageHash());
+        }
+    }
+ 
+    // ---- The message ID is created ----
+    @Test
+    public void testMessageIDCreated() {
+        Message m = new Message(0, "+27718693002", "Hello there");   // random ID
+        assertTrue(m.checkMessageID());
+        assertEquals(10, m.messageID.length());
+        assertEquals("Message ID generated: " + m.messageID, m.getMessageIDStatus());
+        System.out.println(m.getMessageIDStatus());
+    }
+ 
+    @Test
+    public void testMessageIDTooLong() {
+        Message m = new Message("12345678901", 0, "+27718693002", "Hello there");
+        assertFalse(m.checkMessageID());
+    }
+ 
+    // ---- MessageSent: send, disregard and store ----
+    @Test
+    public void testSendMessage() {
+        assertEquals("Message successfully sent.", msg1.SentMessage(1));
+    }
+ 
+    @Test
+    public void testDisregardMessage() {
+        assertEquals("Press 0 to delete the message.", msg2.SentMessage(2));
+    }
+ 
+    @Test
+    public void testStoreMessage() {
+        assertEquals("Message successfully stored.", msg1.SentMessage(3));
+        assertTrue(new File("messages.json").exists());   // the JSON file was created
+    }
+ 
+    // ---- Total number sent and printed messages ----
+    @Test
+    public void testTotalMessages() {
+        msg1.SentMessage(1);   // sent
+        msg2.SentMessage(2);   // discarded, so not counted
+        assertEquals(1, Message.returnTotalMessagess());
+    }
+ 
+    @Test
+    public void testPrintMessages() {
+        msg1.SentMessage(1);
+        String printed = Message.printMessages();
+        assertTrue(printed.contains("Message ID: 0012345678"));
+        assertTrue(printed.contains("Message Hash: 00:0:HITONIGHT"));
+        assertTrue(printed.contains("Recipient: +27718693002"));
+        assertTrue(printed.contains("Message: Hi Mike, can you join us for dinner tonight?"));
+    }
 }
