@@ -58,5 +58,21 @@ public class Part1 {
                 System.out.println("Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.");
             }
         }
+        
+         String text = "";
+        boolean textOk = false;
+        while (!textOk) {
+            System.out.print("Enter your message: ");
+         text = input.nextLine().trim();
+            if (text.trim().isEmpty()) {
+                System.out.println("The message cannot be empty.");
+            } else if (Message.isValidLength(text)) {
+                System.out.println("Message sent");
+                textOk = true;
+            } else {
+                System.out.println("Please enter a message of less than 250 characters.");
+                System.out.println("Message exceeds 250 characters by " + (text.length() - 250) + ", please reduce the size.");
+            }
+        }
 }
 
