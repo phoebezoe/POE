@@ -76,3 +76,24 @@ public class Part1 {
         }
 }
 
+ Message msg = new Message(messageNumber, recipient, text);
+        String outcome = msg.SentMessage(input);
+        System.out.println(outcome);
+ 
+        // show the full details after the message has been sent
+        if (outcome.equals("Message successfully sent.")) {
+            System.out.println(msg);
+        }
+    }
+ 
+    // Keeps asking until the user types a whole number
+    public static int readInt(Scanner input, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                return Integer.parseInt(input.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a whole number.");
+            }
+        }
+    }
