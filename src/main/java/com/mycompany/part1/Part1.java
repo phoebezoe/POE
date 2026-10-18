@@ -43,5 +43,20 @@ public class Part1 {
 
         input.close();
     }
+    
+     public static void enterMessage(Scanner input, int messageNumber) {
+        // recipient: keep asking until the number is valid
+        String recipient = "";
+        boolean recipientOk = false;
+        while (!recipientOk) {
+            System.out.print("Enter recipient cell number (e.g. +27718693002): ");
+            recipient = input.nextLine().trim();
+            if (Message.isValidRecipient(recipient)) {
+                System.out.println("Cell phone number successfully captured.");
+                recipientOk = true;
+            } else {
+                System.out.println("Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.");
+            }
+        }
 }
 

@@ -33,6 +33,7 @@ public class LoginTest {
         assertTrue(instance.checkUserName(userTest));
     }
      @Test
+     
     public void testCheckUserNameIncorrect() {
         String firstName = "";
         String lastName = "";
@@ -81,8 +82,6 @@ public class LoginTest {
         assertEquals(expected, actual);
         assertFalse(instance.checkPasswordComplexity(passwordTest));
     }
-
-   
     @Test
    
     public void testCheckCellPhoneNumberCorrect() {  // ensures that cellphone number has the correct format
@@ -100,7 +99,7 @@ public class LoginTest {
         assertEquals(expected, actual);
         assertTrue(instance.checkCellPhoneNumber(cellNumberTest));
     }
- @Test
+     @Test
    
     public void testCheckCellPhoneNumberIncorrect() { // rejects incorrect phon number
         String firstName = "";
@@ -117,7 +116,6 @@ public class LoginTest {
         assertEquals(expected, actual);
         assertFalse(instance.checkCellPhoneNumber(cellNumberTest));
     }
-
     @Test
     
     public void testLoginSuccessful() {
@@ -133,8 +131,8 @@ public class LoginTest {
 
          assertTrue(instance.loginUser(username, password, enteredUsername, enteredPassword));
     }
-
-    @Test
+ @Test 
+ 
     public void testLoginFailed() {
         String firstName = "";
         String lastName = "";
