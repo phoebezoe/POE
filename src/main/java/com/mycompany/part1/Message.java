@@ -24,21 +24,17 @@ public class Message {
     public String messageText;
     public String messageHash;
 
-    public Message(int messageNumber, String recipient, String messageText) {
-        this.messageID = generateMessageID();
-        this.messageNumber = messageNumber;
-        this.recipient = recipient;
-        this.messageText = messageText;
-        this.messageHash = createMessageHash();
-    }
-    
-    public Message(String messageID, int messageNumber, String recipient, String messageText) {
-        this.messageID = messageID;
-        this.messageNumber = messageNumber;
-        this.recipient = recipient;
-        this.messageText = messageText;
-        this.messageHash = createMessageHash();
-    }
+public Message(int messageNumber, String recipient, String messageText) {
+    this(generateMessageID(), messageNumber, recipient, messageText);
+}
+
+public Message(String messageID, int messageNumber, String recipient, String messageText) {
+    this.messageID = messageID;
+    this.messageNumber = messageNumber;
+    this.recipient = recipient;
+    this.messageText = messageText;
+    this.messageHash = createMessageHash();
+}
      public static String generateMessageID() {
         String digits = "0123456789";
         Random random = new Random();
