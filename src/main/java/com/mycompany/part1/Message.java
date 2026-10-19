@@ -13,9 +13,9 @@ import java.util.Scanner;
  */
 public class Message {
     
-      public static String sentMessages = "";    // details of every message that was sent
-    public static String storedEntries = "";   // one JSON object for every stored message
-    public static int totalMessages = 0;       // number of messages sent
+      public static String sentMessages = "";    
+    public static String storedEntries = "";   
+    public static int totalMessages = 0;       
     public static int totalStored = 0;         // number of messages stored
  
     public String messageID;
@@ -23,8 +23,7 @@ public class Message {
     public String recipient;
     public String messageText;
     public String messageHash;
- 
-    // Used by the app: the Message ID is generated randomly
+
     public Message(int messageNumber, String recipient, String messageText) {
         this.messageID = generateMessageID();
         this.messageNumber = messageNumber;
@@ -56,7 +55,6 @@ public class Message {
         return messageID.length() <= 10;
     }
  
-    // Message to display when the ID has been created (used in the unit test)
     public String getMessageIDStatus() {
         return "Message ID generated: " + messageID;
     }
@@ -72,7 +70,7 @@ public class Message {
         return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
     }
  
-    // A message may not be more than 250 characters
+    // A messages not more than 250 characters
     public static boolean isValidLength(String text) {
         return text.length() <= 250;
     }
@@ -86,8 +84,6 @@ public class Message {
         return "Message exceeds 250 characters by " + extra + ", please reduce the size.";
     }
  
-    // Hash = first two digits of the ID : message number : FIRSTWORD + LASTWORD in capitals
-    // e.g. 00:0:HITONIGHT. Uses indexOf and substring (string manipulation), no arrays.
     public String createMessageHash() {
         String text = messageText.trim();
         int firstSpace = text.indexOf(" ");
@@ -100,7 +96,6 @@ public class Message {
             lastWord = text.substring(lastSpace + 1);
         }
  
-        // remove punctuation such as the ? in "tonight?"
         firstWord = firstWord.replaceAll("[^A-Za-z0-9]", "");
         lastWord = lastWord.replaceAll("[^A-Za-z0-9]", "");
  
@@ -146,19 +141,14 @@ public class Message {
         return result;
     }
  
-    // Returns the details of all messages sent while the program is running
     public static String printMessages() {
         return sentMessages;
     }
  
-    // Returns the total number of messages sent (spelled with two s's as in the brief)
     public static int returnTotalMessagess() {
         return totalMessages;
     }
  
-    // Own method: adds this message to the stored messages and saves them in messages.json
-    // JSON layout based on the JSON syntax rules at json.org (2026) and the Java
-    // FileWriter class in Farrell (2022).
     public void storeMessage() {
         String entry = "  {\n"
                 + "    \"messageID\": \"" + escapeJson(messageID) + "\",\n"
@@ -180,12 +170,10 @@ public class Message {
         }
     }
  
-    // Makes text safe to place inside a JSON string (backslashes and quotation marks)
     public static String escapeJson(String text) {
         return text.replace("\\", "\\\\").replace("\"", "\\\"");
     }
  
-    // Clears everything so each unit test starts fresh
     public static void reset() {
         sentMessages = "";
         storedEntries = "";
@@ -193,7 +181,6 @@ public class Message {
         totalStored = 0;
     }
  
-    // Order required by the brief: Message ID, Message Hash, Recipient, Message
     @Override
     public String toString() {
         return "Message ID: " + messageID + "\n"

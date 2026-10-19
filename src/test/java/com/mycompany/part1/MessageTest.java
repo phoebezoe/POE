@@ -14,8 +14,8 @@ import java.io.File;
  */
 public class MessageTest {
     
-     Message msg1;   // Test data 1: will be SENT
-    Message msg2;   // Test data 2: will be DISCARDED
+     Message msg1;  
+    Message msg2;   
  
     @BeforeEach
     public void setUp() {
@@ -26,7 +26,7 @@ public class MessageTest {
                 "Hi Keegan, did you receive the payment?");
     }
  
-    // ---- The message should not be more than 250 characters ----
+    
     @Test
     public void testMessageLengthSuccess() {
         assertEquals("Message ready to send.", msg1.checkMessageLength());
@@ -40,7 +40,6 @@ public class MessageTest {
                 m.checkMessageLength());
     }
  
-    // ---- The recipient number is correctly formatted ----
     @Test
     public void testRecipientSuccess() {
         assertEquals("Cell phone number successfully captured.", msg1.checkRecipientCell());
@@ -59,7 +58,6 @@ public class MessageTest {
  
     @Test
     public void testMessageHashesInLoop() {
-        // test the hash of both messages in a loop (no arrays)
         for (int i = 0; i < 2; i++) {
             Message m = msg1;
             String expected = "00:0:HITONIGHT";
@@ -71,7 +69,6 @@ public class MessageTest {
         }
     }
  
-    // ---- The message ID is created ----
     @Test
     public void testMessageIDCreated() {
         Message m = new Message(0, "+27718693002", "Hello there");   // random ID
@@ -87,7 +84,6 @@ public class MessageTest {
         assertFalse(m.checkMessageID());
     }
  
-    // ---- MessageSent: send, disregard and store ----
     @Test
     public void testSendMessage() {
         assertEquals("Message successfully sent.", msg1.SentMessage(1));
@@ -101,14 +97,13 @@ public class MessageTest {
     @Test
     public void testStoreMessage() {
         assertEquals("Message successfully stored.", msg1.SentMessage(3));
-        assertTrue(new File("messages.json").exists());   // the JSON file was created
+        assertTrue(new File("messages.json").exists());   
     }
  
-    // ---- Total number sent and printed messages ----
     @Test
     public void testTotalMessages() {
         msg1.SentMessage(1);   // sent
-        msg2.SentMessage(2);   // discarded, so not counted
+        msg2.SentMessage(2);   // discarded
         assertEquals(1, Message.returnTotalMessagess());
     }
  
