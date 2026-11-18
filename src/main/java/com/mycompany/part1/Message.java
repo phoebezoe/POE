@@ -57,6 +57,11 @@ public Message(String messageID, int messageNumber, String recipient, String mes
         return fullID.substring(0, 10);
     }
  
+      // Boolean: true if the Message ID is no more than ten characters
+    public boolean checkMessageID() {
+        return messageID.length() <= 10;
+    }
+ 
     public String getMessageIDStatus() {
         return "Message ID generated: " + messageID;
     }
@@ -70,11 +75,6 @@ public Message(String messageID, int messageNumber, String recipient, String mes
             return "Cell phone number successfully captured.";
         }
         return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
-    }
- 
-    // A messages not more than 250 characters
-    public static boolean isValidLength(String text) {
-        return text.length() <= 250;
     }
  
     // Returns the success or failure message for the message length
