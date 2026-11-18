@@ -77,6 +77,11 @@ public Message(String messageID, int messageNumber, String recipient, String mes
         return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
     }
  
+     // A messages not more than 250 characters
+    public static boolean isValidLength(String text) {
+        return text.length() <= 250;
+    }
+ 
     // Returns the success or failure message for the message length
     public String checkMessageLength() {
         if (isValidLength(messageText)) {
@@ -107,10 +112,10 @@ public Message(String messageID, int messageNumber, String recipient, String mes
     
      public String SentMessage(int choice) {
         if (choice == 1) {
-            sentMessages = sentMessages + this.toString() + "\n\n";
-            totalMessages++;
+            addToArrays("Sent");
             return "Message successfully sent.";
         } else if (choice == 2) {
+            addToArrays("Disregard");
             return "Press 0 to delete the message.";
         } else if (choice == 3) {
             storeMessage();
@@ -118,6 +123,60 @@ public Message(String messageID, int messageNumber, String recipient, String mes
         } else {
             return "Invalid option.";
         }
+    }
+ 
+    // Lets the user choose to send, disregard or store the message
+    public String SentMessage(Scanner input) {
+        int choice = 0;
+        while (choice < 1 || choice > 3) {
+            System.out.println("1) Send Message");
+            System.out.println("2) Disregard Message");
+            System.out.println("3) Store Message to send later");
+            choice =Part1.readInt(input, "Choose an option: ");
+        }
+ 
+        String result = SentMessage(choice);
+        if (choice == 2) {
+            System.out.println(result);                 // Press 0 to delete the message.
+            String answer = input.nextLine().trim();
+            while (!answer.equals("0")) {
+                System.out.println("Press 0 to delete the message.");
+                answer = input.nextLine().trim();
+            }
+            return "Message deleted.";
+        }
+        return result;
+    }
+ 
+    // Adds this message to the parallel arrays and to the array that matches its flag
+    private void addToArrays(String flag) {
+        messageIDs.add(messageID);
+        messageHashes.add(messageHash);
+        messageRecipients.add(recipient);
+        messageTexts.add(messageText);
+        messageFlags.add(flag);
+
+        if (flag.equals("Sent")) {
+            sentMessages.add(messageText);
+        } else if (flag.equals("Disregard")) {
+            disregardedMessages.add(messageText);
+        } else {
+            storedMessages.add(messageText);
+        }
+    }
+ 
+    // Report of every sent message (used by "Show recently sent messages")
+    public static String printMessages() {
+        return displayReport("Sent");
+    }
+ 
+    public static int returnTotalMessagess() {
+        return sentMessages.size();
+    }
+ 
+    public void storeMessage() {
+        addToArrays("Stored");
+        writeStoredMessagesToJson();
     }
  
     // Lets the user choose to send, disregard or store the message
