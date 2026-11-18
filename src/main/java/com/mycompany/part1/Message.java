@@ -26,16 +26,17 @@ public class Message {
     public static ArrayList<String> messageHashes = new ArrayList<>();        // every message hash
     public static ArrayList<String> messageIDs = new ArrayList<>();           // every message ID
 
-public Message(int messageNumber, String recipient, String messageText) {
-    this(generateMessageID(), messageNumber, recipient, messageText);
-}
+public static ArrayList<String> messageRecipients = new ArrayList<>();
+    public static ArrayList<String> messageTexts = new ArrayList<>();
+    public static ArrayList<String> messageFlags = new ArrayList<>();         // "Sent", "Stored" or "Disregard"
 
-public Message(String messageID, int messageNumber, String recipient, String messageText) {
-    this.messageID = messageID;
-    this.messageNumber = messageNumber;
-    this.recipient = recipient;
-    this.messageText = messageText;
-    this.messageHash = createMessageHash();
+    public static final String JSON_FILE = "messages.json";
+
+ public String messageID;
+    public int messageNumber;
+    public String recipient;
+    public String messageText;
+    public String messageHash;
 }
      public static String generateMessageID() {
         String digits = "0123456789";
