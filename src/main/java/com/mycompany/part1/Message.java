@@ -20,16 +20,11 @@ import java.util.Scanner;
  */
 public class Message {
     
-      public static String sentMessages = "";    
-    public static String storedEntries = "";   
-    public static int totalMessages = 0;       
-    public static int totalStored = 0;         // number of messages stored
- 
-    public String messageID;
-    public int messageNumber;
-    public String recipient;
-    public String messageText;
-    public String messageHash;
+     public static ArrayList<String> sentMessages = new ArrayList<>();         // text of every sent message
+    public static ArrayList<String> disregardedMessages = new ArrayList<>();  // text of every disregarded message
+    public static ArrayList<String> storedMessages = new ArrayList<>();       // text of every stored message (read from JSON)
+    public static ArrayList<String> messageHashes = new ArrayList<>();        // every message hash
+    public static ArrayList<String> messageIDs = new ArrayList<>();           // every message ID
 
 public Message(int messageNumber, String recipient, String messageText) {
     this(generateMessageID(), messageNumber, recipient, messageText);
