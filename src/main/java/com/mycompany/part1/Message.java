@@ -38,20 +38,23 @@ public static ArrayList<String> messageRecipients = new ArrayList<>();
     public String messageText;
     public String messageHash;
 }
-     public static String generateMessageID() {
-        String digits = "0123456789";
+     public Message(int messageNumber, String recipient, String messageText) {
+    this(generateMessageID(), messageNumber, recipient, messageText);
+}
+
+public Message(String messageID, int messageNumber, String recipient, String messageText) {
+    this.messageID = messageID;
+    this.messageNumber = messageNumber;
+    this.recipient = recipient;
+    this.messageText = messageText;
+    this.messageHash = createMessageHash();
+}
+    public static String generateMessageID() {
         Random random = new Random();
-        String id = "";
-        for (int i = 0; i < 10; i++) {
-            int position = random.nextInt(10);
-            id = id + digits.substring(position, position + 1);
-        }
-        return id;
-    }
- 
-    // Boolean: true if the Message ID is no more than ten characters
-    public boolean checkMessageID() {
-        return messageID.length() <= 10;
+        // build one long 13 digit number, then cut the first 10 digits out of it with substring
+        long number = 1_000_000_000_000L + (long) (random.nextDouble() * 9_000_000_000_000L);
+        String fullID = String.valueOf(number);
+        return fullID.substring(0, 10);
     }
  
     public String getMessageIDStatus() {
