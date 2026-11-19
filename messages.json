@@ -1,8 +1,14 @@
 [
   {
-    "messageID": "0012345678",
-    "messageHash": "00:0:HITONIGHT",
-    "recipient": "+27718693002",
-    "message": "Hi Mike, can you join us for dinner tonight?"
+    "messageID": "0838884561",
+    "messageHash": "08:2:WHERETIME",
+    "recipient": "+27838884567",
+    "message": "Where are you? You are late! I have asked you to be on time."
+  },
+  {
+    "messageID": "0838884565",
+    "messageHash": "08:5:OKYOU",
+    "recipient": "+27838884567",
+    "message": "Ok, I am leaving without you."
   }
 ]
