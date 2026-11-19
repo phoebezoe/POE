@@ -3,8 +3,9 @@
  */
 package com.mycompany.part1;
 
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  *
  * @author Student
@@ -41,6 +42,8 @@ public class Part1 {
 
             if (loggedIn) {
                 System.out.println("Welcome to QuickChat.");
+                Message.loadStoredMessages();      // read messages.json into the Stored Messages array
+                String senderName = firstName + " " + lastName;
 
                 int maxMessages = readInt(input, "How many messages do you want to enter? ");
                 int entered = 0;
@@ -49,6 +52,7 @@ public class Part1 {
                     System.out.println("1) Send Messages");
                     System.out.println("2) Show recently sent messages");
                     System.out.println("3) Quit");
+                    System.out.println("4) Stored Messages");
                     System.out.print("Choose an option: ");
                     choice = readInt(input, "");
 
@@ -64,11 +68,13 @@ public class Part1 {
                             System.out.println("\nTotal messages sent: " + Message.returnTotalMessagess());
                         }
                     } else if (choice == 2) {
-                        System.out.println("Coming Soon.");
+                        System.out.println(Message.printMessages());
                     } else if (choice == 3) {
                         System.out.println("Goodbye.");
+                    } else if (choice == 4) {
+                        storedMessagesMenu(input, senderName);
                     } else {
-                        System.out.println("Invalid option. Please choose 1, 2 or 3.");
+                        System.out.println("Invalid option. Please choose 1, 2, 3 or 4.");
                     }
                 }
                 System.out.println("\n--- Messages sent ---");
@@ -120,7 +126,7 @@ public class Part1 {
         }
     }
 
-     public static void storedMessagesMenu(Scanner input, String sender) {
+    public static void storedMessagesMenu(Scanner input, String sender) {
         int option = 0;
         while (option != 7) {
             System.out.println("\n--- Stored Messages ---");
