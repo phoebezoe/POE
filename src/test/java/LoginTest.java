@@ -146,4 +146,31 @@ public class LoginTest {
 
         assertFalse(instance.loginUser(username, password, enteredUsername, enteredPassword));
     }
+        @Test
+    public void testRegisterUserSuccess() {
+        Login instance = new Login("kyl_1", "+27838968976", "Ch&&sec@ke99!", "Kyle", "Smith");
+        assertEquals("Username and password successfully captured.",
+                instance.registerUser("kyl_1", "Ch&&sec@ke99!"));
+    }
+
+    @Test
+    public void testRegisterUserBadUsername() {
+        Login instance = new Login("kyle!!!!!!", "+27838968976", "Ch&&sec@ke99!", "Kyle", "Smith");
+        assertEquals("The username is incorrectly formatted.",
+                instance.registerUser("kyle!!!!!!", "Ch&&sec@ke99!"));
+    }
+
+    @Test
+    public void testReturnLoginStatusSuccess() {
+        Login instance = new Login("kyl_1", "+27838968976", "Ch&&sec@ke99!", "Kyle", "Smith");
+        assertEquals("Welcome Kyle, Smith it is great to see you again.",
+                instance.returnLoginStatus("kyl_1", "Ch&&sec@ke99!", "kyl_1", "Ch&&sec@ke99!", "Kyle", "Smith"));
+    }
+
+    @Test
+    public void testReturnLoginStatusFailed() {
+        Login instance = new Login("kyl_1", "+27838968976", "Ch&&sec@ke99!", "Kyle", "Smith");
+        assertEquals("Username or password incorrect, please try again.",
+                instance.returnLoginStatus("kyl_1", "Ch&&sec@ke99!", "wrong", "wrong", "Kyle", "Smith"));
+    }
 }
