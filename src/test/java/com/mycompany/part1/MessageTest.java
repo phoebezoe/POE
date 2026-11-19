@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.File;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  *
@@ -107,7 +109,7 @@ public class MessageTest {
         assertEquals(1, Message.returnTotalMessagess());
     }
  
-    @Test
+     @Test
     public void testPrintMessages() {
         msg1.SentMessage(1);
         String printed = Message.printMessages();
@@ -116,4 +118,97 @@ public class MessageTest {
         assertTrue(printed.contains("Recipient: +27718693002"));
         assertTrue(printed.contains("Message: Hi Mike, can you join us for dinner tonight?"));
     }
-}
+
+    // ---------------- Part 3: test data from the task ----------------
+    Message t1, t2, t3, t4, t5;
+
+    // Populates the arrays with Test Data 1 to 5 (Sent, Stored, Disregard, Sent, Stored)
+    private void populateTestData() {
+        Message.reset();
+        t1 = new Message("0834557896", 1, "+27834557896", "Did you get the cake?");
+        t2 = new Message("0838884561", 2, "+27838884567", "Where are you? You are late! I have asked you to be on time.");
+        t3 = new Message("0834484567", 3, "+27834484567", "Yohoooo, I am at your gate.");
+        t4 = new Message("0838884567", 4, "0838884567", "It is dinner time!");
+        t5 = new Message("0838884565", 5, "+27838884567", "Ok, I am leaving without you.");
+        t1.SentMessage(1);
+        t2.SentMessage(3);
+        t3.SentMessage(2);
+        t4.SentMessage(1);
+        t5.SentMessage(3);
+    }
+
+    @Test
+    public void testSentMessagesArrayPopulated() {
+        populateTestData();
+        ArrayList<String> expected = new ArrayList<>(Arrays.asList("Did you get the cake?", "It is dinner time!"));
+        assertEquals(expected, Message.sentMessages);
+    }
+
+    @Test
+    public void testDisregardedAndStoredArraysPopulated() {
+        populateTestData();
+        assertEquals(Arrays.asList("Yohoooo, I am at your gate."), Message.disregardedMessages);
+        assertEquals(2, Message.storedMessages.size());
+        assertEquals(5, Message.messageHashes.size());
+        assertEquals(5, Message.messageIDs.size());
+    }
+
+    @Test
+    public void testLongestStoredMessage() {
+        populateTestData();
+        assertEquals("Where are you? You are late! I have asked you to be on time.",
+                Message.displayLongestStoredMessage());
+    }
+
+    @Test
+    public void testSearchByMessageID() {
+        populateTestData();
+        assertEquals("It is dinner time!", Message.searchByMessageID("0838884567"));
+        assertEquals("0838884567", Message.getRecipientByMessageID("0838884567"));
+    }
+
+    @Test
+    public void testSearchByRecipient() {
+        populateTestData();
+        ArrayList<String> expected = new ArrayList<>(Arrays.asList(
+                "Where are you? You are late! I have asked you to be on time.",
+                "Ok, I am leaving without you."));
+        assertEquals(expected, Message.searchByRecipient("+27838884567"));
+    }
+
+    @Test
+    public void testDeleteByMessageHash() {
+        populateTestData();
+        String result = Message.deleteByMessageHash(t2.messageHash);
+        assertEquals("Message: \"Where are you? You are late! I have asked you to be on time.\" successfully deleted.", result);
+        assertEquals(1, Message.storedMessages.size());
+        assertEquals(4, Message.messageHashes.size());
+    }
+
+    @Test
+    public void testDisplayReport() {
+        populateTestData();
+        String report = Message.displayReport("Sent");
+        assertTrue(report.contains(t1.messageHash));
+        assertTrue(report.contains("+27834557896"));
+        assertTrue(report.contains("Did you get the cake?"));
+        assertTrue(report.contains(t4.messageHash));
+        assertTrue(report.contains("It is dinner time!"));
+    }
+
+    @Test
+    public void testReadJsonIntoStoredArray() {
+        populateTestData();                 // writes messages 2 and 5 to messages.json
+        Message.reset();                    // empty every array
+        Message.loadStoredMessages();       // read the JSON file back in
+        assertEquals(Arrays.asList("Where are you? You are late! I have asked you to be on time.",
+                "Ok, I am leaving without you."), Message.storedMessages);
+    }
+
+    @Test
+    public void testMessageIDGeneratedWithSubstring() {
+        for (int i = 0; i < 50; i++) {
+            assertEquals(10, Message.generateMessageID().length());
+        }
+    }
+}  
