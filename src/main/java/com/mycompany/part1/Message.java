@@ -20,7 +20,7 @@ import java.util.Scanner;
  */
 public class Message {
     
-    // Part 3 arrays. The first five are the arrays required by the task.
+   
     public static ArrayList<String> sentMessages = new ArrayList<>();         // text of every sent message
     public static ArrayList<String> disregardedMessages = new ArrayList<>();  // text of every disregarded message
     public static ArrayList<String> storedMessages = new ArrayList<>();       // text of every stored message (read from JSON)
@@ -30,7 +30,7 @@ public class Message {
     // Parallel arrays: index 0 in every one of these 5 lists belongs to the same message
     public static ArrayList<String> messageRecipients = new ArrayList<>();
     public static ArrayList<String> messageTexts = new ArrayList<>();
-    public static ArrayList<String> messageFlags = new ArrayList<>();         // "Sent", "Stored" or "Disregard"
+    public static ArrayList<String> messageFlags = new ArrayList<>();        
 
     public static final String JSON_FILE = "messages.json";
 
@@ -53,13 +53,11 @@ public Message(String messageID, int messageNumber, String recipient, String mes
 }
     public static String generateMessageID() {
         Random random = new Random();
-        // build one long 13 digit number, then cut the first 10 digits out of it with substring
         long number = 1_000_000_000_000L + (long) (random.nextDouble() * 9_000_000_000_000L);
         String fullID = String.valueOf(number);
         return fullID.substring(0, 10);
     }
  
-    // Boolean: true if the Message ID is no more than ten characters
     public boolean checkMessageID() {
         return messageID.length() <= 10;
     }
@@ -167,7 +165,6 @@ public Message(String messageID, int messageNumber, String recipient, String mes
         }
     }
  
-    // Report of every sent message (used by "Show recently sent messages")
     public static String printMessages() {
         return displayReport("Sent");
     }
@@ -235,7 +232,6 @@ public Message(String messageID, int messageNumber, String recipient, String mes
         return text.replace("\\", "\\\\").replace("\"", "\\\"");
     }
  
-    // a) sender and recipient of every stored message
     public static String displaySenderAndRecipient(String sender) {
         String result = "";
         for (int i = 0; i < messageFlags.size(); i++) {
@@ -249,7 +245,6 @@ public Message(String messageID, int messageNumber, String recipient, String mes
         return result;
     }
  
-    // b) longest stored message
     public static String displayLongestStoredMessage() {
         if (storedMessages.isEmpty()) {
             return "No stored messages.";
@@ -263,7 +258,6 @@ public Message(String messageID, int messageNumber, String recipient, String mes
         return longest;
     }
  
-    // c) search by message ID (uses the parallel arrays)
     public static String searchByMessageID(String id) {
         int index = messageIDs.indexOf(id);
         if (index == -1) {
@@ -280,7 +274,6 @@ public Message(String messageID, int messageNumber, String recipient, String mes
         return messageRecipients.get(index);
     }
  
-    // d) every sent or stored message for one recipient
     public static ArrayList<String> searchByRecipient(String recipientNumber) {
         ArrayList<String> found = new ArrayList<>();
         for (int i = 0; i < messageRecipients.size(); i++) {
@@ -291,7 +284,6 @@ public Message(String messageID, int messageNumber, String recipient, String mes
         return found;
     }
  
-    // e) delete a message using its hash (removes it from every array)
     public static String deleteByMessageHash(String hash) {
         int index = messageHashes.indexOf(hash.trim().toUpperCase());
         if (index == -1) {

@@ -104,7 +104,7 @@ public class MessageTest {
  
     @Test
     public void testTotalMessages() {
-        msg1.SentMessage(1);   // sent
+        msg1.SentMessage(1);   
         msg2.SentMessage(2);   // discarded
         assertEquals(1, Message.returnTotalMessagess());
     }
@@ -119,10 +119,9 @@ public class MessageTest {
         assertTrue(printed.contains("Message: Hi Mike, can you join us for dinner tonight?"));
     }
 
-    // ---------------- Part 3: test data from the task ----------------
+  
     Message t1, t2, t3, t4, t5;
 
-    // Populates the arrays with Test Data 1 to 5 (Sent, Stored, Disregard, Sent, Stored)
     private void populateTestData() {
         Message.reset();
         t1 = new Message("0834557896", 1, "+27834557896", "Did you get the cake?");
@@ -200,7 +199,7 @@ public class MessageTest {
     public void testReadJsonIntoStoredArray() {
         populateTestData();                 // writes messages 2 and 5 to messages.json
         Message.reset();                    // empty every array
-        Message.loadStoredMessages();       // read the JSON file back in
+        Message.loadStoredMessages();       
         assertEquals(Arrays.asList("Where are you? You are late! I have asked you to be on time.",
                 "Ok, I am leaving without you."), Message.storedMessages);
     }

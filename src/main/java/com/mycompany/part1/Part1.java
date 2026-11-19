@@ -42,7 +42,7 @@ public class Part1 {
 
             if (loggedIn) {
                 System.out.println("Welcome to QuickChat.");
-                Message.loadStoredMessages();      // read messages.json into the Stored Messages array
+                Message.loadStoredMessages();      
                 String senderName = firstName + " " + lastName;
 
                 int maxMessages = readInt(input, "How many messages do you want to enter? ");
@@ -182,3 +182,12 @@ public class Part1 {
         }
     }
 }
+//Farrell, J., 2022. Java programming. 10th ed. Boston: Cengage Learning.
+
+//Oracle, n.d. Arrays. The Java Tutorials. [online] Available at: https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html [Accessed 18 November 2026].
+
+//W3Schools, 2026. JavaScript Arrays. [online] Available at: https://www.w3schools.com/js/js_arrays.asp [Accessed 17 November 2026].
+
+//W3Schools, 2026. JavaScript Loops. [online] Available at: https://www.w3schools.com/js/js_loops.asp [Accessed 18 November 2026].
+
+//Google, 2026. Gson User Guide. [online] Available at: https://github.com/google/gson/blob/main/UserGuide.md [Accessed 19 November 2026].
