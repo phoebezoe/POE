@@ -4,7 +4,7 @@
 package com.mycompany.part1;
 
 import java.util.Scanner;
-
+import java.util.ArrayList;
 /**
  *
  * @author Student
@@ -117,6 +117,51 @@ public class Part1 {
 
         if (outcome.equals("Message successfully sent.")) {
             System.out.println(msg);
+        }
+    }
+
+     public static void storedMessagesMenu(Scanner input, String sender) {
+        int option = 0;
+        while (option != 7) {
+            System.out.println("\n--- Stored Messages ---");
+            System.out.println("1) Display the sender and recipient of all stored messages");
+            System.out.println("2) Display the longest stored message");
+            System.out.println("3) Search for a message ID");
+            System.out.println("4) Search for all messages to a recipient");
+            System.out.println("5) Delete a message using its hash");
+            System.out.println("6) Display a report of all stored messages");
+            System.out.println("7) Back to main menu");
+            option = readInt(input, "Choose an option: ");
+
+            if (option == 1) {
+                System.out.println(Message.displaySenderAndRecipient(sender));
+            } else if (option == 2) {
+                System.out.println("Longest stored message: " + Message.displayLongestStoredMessage());
+            } else if (option == 3) {
+                System.out.print("Enter the message ID: ");
+                String id = input.nextLine().trim();
+                System.out.println("Recipient: " + Message.getRecipientByMessageID(id));
+                System.out.println("Message: " + Message.searchByMessageID(id));
+            } else if (option == 4) {
+                System.out.print("Enter the recipient cell number: ");
+                String number = input.nextLine().trim();
+                ArrayList<String> found = Message.searchByRecipient(number);
+                if (found.isEmpty()) {
+                    System.out.println("No messages found for " + number);
+                }
+                for (String text : found) {
+                    System.out.println(text);
+                }
+            } else if (option == 5) {
+                System.out.print("Enter the message hash: ");
+                String hash = input.nextLine();
+                System.out.println(Message.deleteByMessageHash(hash));
+            } else if (option == 6) {
+                String report = Message.displayReport("Stored");
+                System.out.println(report.isEmpty() ? "No stored messages." : report);
+            } else if (option != 7) {
+                System.out.println("Invalid option. Please choose 1 to 7.");
+            }
         }
     }
 
